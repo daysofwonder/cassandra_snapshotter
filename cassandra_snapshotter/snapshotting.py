@@ -189,7 +189,7 @@ class RestoreWorker(object):
 
     def _download_key(self, key):
         r = self.keyspace_table_matcher.search(key.name)
-        filename = "./{!s}/{!s}/{!s}_{!s}".format(
+        filename = "./{!s}/{!s}/{!s}".format(
             r.group(2), r.group(3),
             key.name.split('/')[2], key.name.split('/')[-1])
 
