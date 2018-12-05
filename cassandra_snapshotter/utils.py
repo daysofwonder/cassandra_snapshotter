@@ -7,6 +7,7 @@ except ImportError:
 import argparse
 import functools
 import subprocess
+import logging
 
 LZOP_BIN = 'lzop'
 PV_BIN = 'pv'
@@ -137,3 +138,9 @@ def decompression_pipe(path):
         stdin=subprocess.PIPE
     )
     return lzop
+
+def makeDir(path):
+    try:
+        os.makedirs(path)
+    except OSError as e:
+        logging.info("Path " + path + " already exists")

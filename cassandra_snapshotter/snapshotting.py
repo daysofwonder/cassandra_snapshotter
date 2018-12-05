@@ -16,7 +16,7 @@ from datetime import datetime
 from fabric.api import (env, execute, hide, run, sudo)
 from fabric.context_managers import settings
 from multiprocessing.dummy import Pool
-from cassandra_snapshotter.utils import decompression_pipe
+from cassandra_snapshotter.utils import (decompression_pipe, makeDir)
 
 
 class Snapshot(object):
@@ -195,6 +195,7 @@ class RestoreWorker(object):
 
         if filename.endswith('.lzo'):
             filename = re.sub('\.lzo$', '', filename)
+            makeDir(os.path.dirname(filename))
             lzop_pipe = decompression_pipe(filename)
             key.open_read()
             for chunk in key:
