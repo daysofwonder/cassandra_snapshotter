@@ -123,7 +123,8 @@ def restore_backup(args):
                            aws_secret_access_key=args.aws_secret_access_key,
                            snapshot=snapshot,
                            cassandra_bin_dir=args.cassandra_bin_dir,
-                           cassandra_data_dir=args.cassandra_data_dir)
+                           cassandra_data_dir=args.cassandra_data_dir,
+                           nosstableloader=args.nosstableloader)
 
     if args.hosts:
         hosts = args.hosts.split(',')
@@ -289,6 +290,12 @@ def main():
         '--cassandra-data-dir',
         default='/usr/local/cassandra/data',
         help="cassandra data directory")
+
+    restore_parser.add_argument(
+        '--no-sstableloader',
+        dest='nosstableloader',
+        action='store_false',
+        help="prevent the sstableloader")
 
     args = base_parser.parse_args()
     subcommand = args.subcommand

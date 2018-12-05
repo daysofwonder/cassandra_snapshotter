@@ -95,7 +95,7 @@ class Snapshot(object):
 
 
 class RestoreWorker(object):
-    def __init__(self, aws_access_key_id, aws_secret_access_key, snapshot, cassandra_bin_dir, cassandra_data_dir):
+    def __init__(self, aws_access_key_id, aws_secret_access_key, snapshot, cassandra_bin_dir, cassandra_data_dir, nosstableloader):
         self.aws_secret_access_key = aws_secret_access_key
         self.aws_access_key_id = aws_access_key_id
         self.s3connection = S3Connection(
@@ -105,6 +105,7 @@ class RestoreWorker(object):
         self.keyspace_table_matcher = None
         self.cassandra_bin_dir = cassandra_bin_dir
         self.cassandra_data_dir = cassandra_data_dir
+        self.nosstableloader = nosstableloader
 
     def restore(self, keyspace, table, hosts, target_hosts):
         # TODO:
@@ -150,7 +151,8 @@ class RestoreWorker(object):
 
         logging.info("Finished downloading...")
 
-        self._run_sstableloader(keyspace_path, tables, target_hosts, self.cassandra_bin_dir)
+        if self.nosstableloader == True:
+            self._run_sstableloader(keyspace_path, tables, target_hosts, self.cassandra_bin_dir)
 
     def _delete_old_dir_and_create_new(self, keyspace_path, tables):
 
