@@ -111,10 +111,9 @@ class RestoreWorker(object):
         # TODO:
         # 4. sstableloader
 
-        logging.info("Restoring keyspace=%(keyspace)s,\
-            table=%(table)s" % dict(keyspace=keyspace, table=table))
-        logging.info("From hosts: %(hosts)s to: %(target_hosts)s" % dict(
-            hosts=', '.join(hosts), target_hosts=', '.join(target_hosts)))
+        logging.info("Restoring keyspace=%(keyspace)s, table=%(table)s" % dict(keyspace=keyspace, table=table))
+        logging.info("From hosts: %(hosts)s to: %(target_hosts)s" % dict(hosts=', '.join(hosts), target_hosts=', '.join(target_hosts)))
+
         if not table:
             table = ".*?"
         if not keyspace:
