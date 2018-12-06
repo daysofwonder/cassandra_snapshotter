@@ -117,9 +117,10 @@ class RestoreWorker(object):
             hosts=', '.join(hosts), target_hosts=', '.join(target_hosts)))
         if not table:
             table = ".*?"
+        if not keyspace:
+            keyspace = ".*?"
 
-        bucket = self.s3connection.get_bucket(
-            self.snapshot.s3_bucket, validate=False)
+        bucket = self.s3connection.get_bucket(self.snapshot.s3_bucket, validate=False)
 
         matcher_string = "(%(hosts)s).*/(%(keyspace)s)/(%(table)s-[A-Za-z0-9]*)/" % dict(
             hosts='|'.join(hosts), keyspace=keyspace, table=table)

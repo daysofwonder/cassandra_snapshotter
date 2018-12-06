@@ -262,7 +262,7 @@ def main():
 
     restore_parser.add_argument(
         '--keyspace',
-        required=True,
+        default='',
         help="The keyspace to restore")
 
     restore_parser.add_argument(
